@@ -27,7 +27,14 @@ def affine_forward(x, w, b):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    # firstly check if input is 3d or 2d, and later transform it in (N,D) matrix
+    if x.ndim == 4: # (n, d1, d2, d3) -> 3d input
+        new_x = x.reshape(x.shape[0], x.shape[1]*x.shape[2]*x.shape[3])
+    elif x.ndim == 3: # (n, d1, d2) -> 2d input
+        new_x = x.reshape(x.shape[0], x.shape[1]*x.shape[2])
+
+    # apply dot product to input and weight matrices, and add bias term
+    out = np.dot(new_x, w) + b[np.newaxis,:]
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
