@@ -66,8 +66,26 @@ def affine_backward(dout, cache):
     # TODO: Implement the affine backward pass.                               #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-    pass
+    
+    # take the derivative of y = Wx + b w.r.t the x
+    dx = np.dot(dout, w.T)
+    
+    # firstly check if input is 3d or 2d, and later transform it in (N,D) matrix
+    # also, transform the derivative of input to original dimension
+    if x.ndim == 4: # (n, d1, d2, d3) -> 3d input
+        new_x = x.reshape(x.shape[0], x.shape[1]*x.shape[2]*x.shape[3])
+        dx    = dx.reshape(x.shape[0], x.shape[1], x.shape[2], x.shape[3])
+    elif x.ndim == 3: # (n, d1, d2) -> 2d input
+        new_x = x.reshape(x.shape[0], x.shape[1]*x.shape[2])
+        dx    = dx.reshape(x.shape[0], x.shape[1], x.shape[2])
+        
+    # take the derivative of y = Wx + b w.r.t the W
+    # it will be (dL/dW = dL/dy * x)
+    dw = np.dot(new_x.T, dout)
+    
+    # take the derivative of y = Wx + b w.r.t the b
+    # it will be (dL/db = sum(dL/dy_i)) -> sum through rows of output
+    db = np.sum(dout, axis=0)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
