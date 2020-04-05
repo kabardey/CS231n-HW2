@@ -111,7 +111,10 @@ def relu_forward(x):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    # ReLu activation function makes the negative values to zero
+    copy_x = x.copy()
+    copy_x[copy_x<0] = 0
+    out = copy_x
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
