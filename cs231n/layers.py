@@ -141,7 +141,16 @@ def relu_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    # derivative of ReLu function is 
+    # if: x < 0, 0 else: x > 0, 1
+    
+    # take index of negative values
+    index_negative = x<=0
+    
+    # make negative values of derivatives of output to zero
+    dout[index_negative] = 0
+    
+    dx = dout
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
